@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.util.*;
 
 public class InfoTest implements ActionListener{
+//	private Image log_back=new ImageIcon(InfoTest.class.getResource("./images/back_log.png")).getImage();
 	JFrame f;  						
 	JButton bInsert,bModify,bDelete,bShow,bExit;
 	JTextArea ta;
@@ -51,10 +52,10 @@ public class InfoTest implements ActionListener{
 		p1.add(new JLabel("나이"));
 		p1.add(tfAge);
 		f.add(p1,BorderLayout.WEST);
-		f.setSize(400, 400);
+		f.setSize(721, 340);
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		f.setResizable(false);
 
 	}
 	void eventProc() {
@@ -178,5 +179,8 @@ public class InfoTest implements ActionListener{
 
 
 	}
+//	public void paint(Graphics g) {//그리는 함수
+//		g.drawImage(log_back, 0, 0, null);
+//	}
 
 }

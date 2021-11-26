@@ -2,10 +2,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import javax.swing.*;
-public class main_activity extends JFrame{
-	private Image background=new ImageIcon(main_activity.class.getResource("./images/mainFrame.png")).getImage();
+public class start extends JFrame{
+	private Image background=new ImageIcon(start.class.getResource("./images/mainFrame.png")).getImage();
 	
-	public main_activity() {
+	public start() {
 		homeframe();
 	}
 	public void homeframe() {
@@ -21,6 +21,6 @@ public class main_activity extends JFrame{
 		g.drawImage(background, 0, 0, null);
 	}
 	public static void main(String[] args) {
-		new main_activity();
+		new start();
 	}
 }
