@@ -19,7 +19,7 @@ import javax.swing.JFormattedTextField;
 
 public class start_game extends JFrame {
 	private Image background=new ImageIcon(start_game.class.getResource("./images/mainFrame.png")).getImage();
-	private JPanel contentPane;
+	private JPanel startPane;
 	
 	public void homeframe() {
 		setTitle("Banana Break");//타이틀
@@ -53,17 +53,17 @@ public class start_game extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 721, 544);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		startPane = new JPanel();
+		startPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(startPane);
+		startPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("게임 시작하기");
 		btnNewButton.setBounds(176, 306, 149, 32);
-		contentPane.add(btnNewButton);
+		startPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("게임 설명서");
 		btnNewButton_1.setBounds(377, 306, 149, 32);
-		contentPane.add(btnNewButton_1);
+		startPane.add(btnNewButton_1);
 	}
 }

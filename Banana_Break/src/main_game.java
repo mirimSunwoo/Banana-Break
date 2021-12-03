@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 
 public class main_game extends JFrame {
 	private Image main_background = new ImageIcon(main_game.class.getResource("./images/back_main.png")).getImage();
-	private JPanel contentPane;
+	private JPanel mainPane;
 
 	private void homeframe() {
 		setTitle("Test Break");//Å¸ÀÌÆ²
@@ -51,33 +51,33 @@ public class main_game extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 721, 544);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		mainPane = new JPanel();
+		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(mainPane);
+		mainPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("¹ÝÁ×Ãß°¡");
 		btnNewButton.setBounds(140, 71, 108, 32);
-		contentPane.add(btnNewButton);
+		mainPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("»§ÁÖ±â");
 		btnNewButton_1.setBounds(140, 25, 107, 33);
-		contentPane.add(btnNewButton_1);
+		mainPane.add(btnNewButton_1);
 		
 		Panel panel = new Panel();
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(10, 26, 113, 32);
-		contentPane.add(panel);
+		mainPane.add(panel);
 		
 		Panel panel_1 = new Panel();
 		panel_1.setBackground(Color.WHITE);
 		panel_1.setBounds(10, 71, 113, 32);
-		contentPane.add(panel_1);
+		mainPane.add(panel_1);
 		
 		Panel panel_2 = new Panel();
 		panel_2.setBackground(Color.WHITE);
 		panel_2.setBounds(521, 25, 169, 32);
-		contentPane.add(panel_2);
+		mainPane.add(panel_2);
 	}
 }

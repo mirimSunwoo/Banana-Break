@@ -11,7 +11,7 @@ import javax.swing.border.EmptyBorder;
 public class gameover extends JFrame {
 	private Image gameover_background = new ImageIcon(main_game.class.getResource("./images/gameover.png")).getImage();
 
-	private JPanel contentPane;
+	private JPanel gameoverPane;
 
 	private void homeframe() {
 		setTitle("Test Break");//≈∏¿Ã∆≤
@@ -44,10 +44,10 @@ public class gameover extends JFrame {
 		homeframe();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 721, 544);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		gameoverPane = new JPanel();
+		gameoverPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		gameoverPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(gameoverPane);
 	}
 
 }

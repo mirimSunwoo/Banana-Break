@@ -11,7 +11,7 @@ import javax.swing.JButton;
 
 public class finish_game extends JFrame {
 	private Image finish_background = new ImageIcon(main_game.class.getResource("./images/back_log.png")).getImage();
-	private JPanel contentPane;
+	private JPanel finishPane;
 
 	private void homeframe() {
 		setTitle("Test Break");//타이틀
@@ -43,18 +43,18 @@ public class finish_game extends JFrame {
 	public finish_game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 721, 544);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		finishPane = new JPanel();
+		finishPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(finishPane);
+		finishPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("원숭이들과 같이 살기");
 		btnNewButton.setBounds(402, 200, 231, 48);
-		contentPane.add(btnNewButton);
+		finishPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("본래의 삶으로 돌아가기");
 		btnNewButton_1.setBounds(85, 200, 231, 48);
-		contentPane.add(btnNewButton_1);
+		finishPane.add(btnNewButton_1);
 		
 		
 	}
