@@ -3,20 +3,14 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import java.awt.Panel;
-import java.awt.Color;
-import javax.swing.JTextArea;
 
-public class main_game extends JFrame {
-	private Image main_background = new ImageIcon(main_game.class.getResource("./images/back_main.png")).getImage();
+public class finish_game extends JFrame {
+	private Image finish_background = new ImageIcon(main_game.class.getResource("./images/back_log.png")).getImage();
 	private JPanel contentPane;
 
 	private void homeframe() {
@@ -28,13 +22,13 @@ public class main_game extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//JFrame이 정상적으로 종료되게
 	}
 	public void paint(Graphics g) {
-		g.drawImage(main_background, 0, 0, null);
+		g.drawImage(finish_background, 0, 0, null);
 	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					main_game frame = new main_game();
+					finish_game frame = new finish_game();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,9 +40,7 @@ public class main_game extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public main_game() {
-		homeframe();
-		
+	public finish_game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 721, 544);
 		contentPane = new JPanel();
@@ -56,28 +48,15 @@ public class main_game extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("반죽추가");
-		btnNewButton.setBounds(140, 71, 108, 32);
+		JButton btnNewButton = new JButton("원숭이들과 같이 살기");
+		btnNewButton.setBounds(402, 200, 231, 48);
 		contentPane.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("빵주기");
-		btnNewButton_1.setBounds(140, 25, 107, 33);
+		JButton btnNewButton_1 = new JButton("본래의 삶으로 돌아가기");
+		btnNewButton_1.setBounds(85, 200, 231, 48);
 		contentPane.add(btnNewButton_1);
 		
-		Panel panel = new Panel();
-		panel.setForeground(Color.WHITE);
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 26, 113, 32);
-		contentPane.add(panel);
 		
-		Panel panel_1 = new Panel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(10, 71, 113, 32);
-		contentPane.add(panel_1);
-		
-		Panel panel_2 = new Panel();
-		panel_2.setBackground(Color.WHITE);
-		panel_2.setBounds(521, 25, 169, 32);
-		contentPane.add(panel_2);
 	}
+
 }
