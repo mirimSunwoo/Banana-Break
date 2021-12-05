@@ -41,6 +41,7 @@ public class finish_game extends JFrame {
 	 * Create the frame.
 	 */
 	public finish_game() {
+		homeframe();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 721, 544);
 		finishPane = new JPanel();

@@ -1,23 +1,41 @@
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.SwingConstants;
+import javax.swing.JLabel;
 
-public class Game {
 
+public class Game extends JFrame{
+
+	private Image startBack = new ImageIcon(main_game.class.getResource("./images/mainFrame.png")).getImage();
+
+	public void paint(Graphics g) {
+		g.drawImage(startBack, 0, 0, null);
+	}
 	private JFrame frame;
 
 	/**
 	 * Launch the application.
 	 */
+	public Game() {
+		super();
+		initialize();
+	}
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -30,17 +48,6 @@ public class Game {
 			}
 		});
 	}
-
-	/**
-	 * Create the application.
-	 */
-	public Game() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 721, 544);
@@ -60,6 +67,12 @@ public class Game {
 		JButton btnExplan = new JButton("게임 설명서");
 		btnExplan.setBounds(377, 306, 149, 32);
 		startPane.add(btnExplan);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 705, 505);
+		lblNewLabel.setIcon(new ImageIcon(Game.class.getResource("/images/mainFrame.png")));
+		startPane.add(lblNewLabel);
+		
 		
 		JPanel mainPane = new JPanel();
 		mainPane.setBounds(0, 0, 705, 505);
@@ -99,6 +112,11 @@ public class Game {
 		btnGameClear.setBounds(522, 105, 171, 32);
 		mainPane.add(btnGameClear);
 		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(Game.class.getResource("/images/back_main.png")));
+		lblNewLabel_1.setBounds(0, 0, 705, 505);
+		mainPane.add(lblNewLabel_1);
+		
 		JPanel finishPane = new JPanel();
 		finishPane.setBounds(0, 1, 705, 503);
 		finishPane.setLayout(null);
@@ -113,15 +131,29 @@ public class Game {
 		btnFinishBack.setBounds(85, 200, 231, 48);
 		finishPane.add(btnFinishBack);
 		
-		JPanel gameoverPane = new JPanel();
-		gameoverPane.setBounds(0, 0, 705, 505);
-		frame.getContentPane().add(gameoverPane);
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(Game.class.getResource("/images/back_log.png")));
+		lblNewLabel_2.setBounds(0, 0, 705, 503);
+		finishPane.add(lblNewLabel_2);
 		
-		JButton btngameoverBack = new JButton("돌아가기 테스트");
+		JPanel gameoverPane = new JPanel();
+		gameoverPane.setBounds(-50, -32, 800, 581);
+		frame.getContentPane().add(gameoverPane);
+		gameoverPane.setLayout(null);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		gameoverPane.add(lblNewLabel_3);
+		lblNewLabel_3.setBounds(40, 5, 720, 544);
+		lblNewLabel_3.setIcon(new ImageIcon(Game.class.getResource("/images/gameover.png")));
+		
+		JButton btngameoverBack = new JButton("돌아가기");
+		btngameoverBack.setBounds(321, 40, 144, 23);
 		gameoverPane.add(btngameoverBack);
 		
 		finishPane.setVisible(false);
 		mainPane.setVisible(false);
+		gameoverPane.setVisible(false);
+
 		//게임 시작하는 화면
 		btnStart.addActionListener(new ActionListener() {
 
@@ -129,6 +161,8 @@ public class Game {
 			public void actionPerformed(ActionEvent e) {
 				mainPane.setVisible(true);
 				startPane.setVisible(false);
+				gameoverPane.setVisible(false);
+				finishPane.setVisible(false);
 			}
 			
 		});
@@ -141,6 +175,7 @@ public class Game {
 				mainPane.setVisible(false);
 				startPane.setVisible(true);
 				gameoverPane.setVisible(false);
+				finishPane.setVisible(false);
 			}
 			
 		});
@@ -153,7 +188,7 @@ public class Game {
 				mainPane.setVisible(false);
 				finishPane.setVisible(true);
 				gameoverPane.setVisible(false);
-
+				startPane.setVisible(false);
 			}
 			
 		});
@@ -165,8 +200,8 @@ public class Game {
 				// TODO Auto-generated method stub
 				finishPane.setVisible(false);
 				gameoverPane.setVisible(true);
-				gameoverPane.setVisible(false);
-
+				startPane.setVisible(false);
+				mainPane.setVisible(false);
 			}
 			
 		});
@@ -177,7 +212,8 @@ public class Game {
 				// TODO Auto-generated method stub
 				finishPane.setVisible(false);
 				gameoverPane.setVisible(true);
-
+				startPane.setVisible(false);
+				mainPane.setVisible(false);
 			}
 			
 		});
@@ -186,8 +222,10 @@ public class Game {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				gameoverPane.setVisible(false);
 				finishPane.setVisible(true);
+				gameoverPane.setVisible(false);
+				startPane.setVisible(false);
+				mainPane.setVisible(false);
 			}
 			
 		});
