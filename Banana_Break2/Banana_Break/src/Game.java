@@ -144,7 +144,7 @@ public class Game extends JFrame{
 						mainPane.add(btnNewButton);
 					}
 				};
-				timer1.schedule(task1, 3000);
+				timer1.schedule(task1, 4000);
 				
 				TimerTask task2 = new TimerTask() {
 					
