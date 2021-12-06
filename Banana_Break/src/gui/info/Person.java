@@ -1,14 +1,14 @@
 package gui.info;
 
 public class Person {
-	// ë©¤ë²„ë³??ˆ˜
+	
 	String ID,name,PW,gender;
 	int age;
 	
 	public Person() {
 		
 	}
-	// ?ƒ?„±? ?•¨?ˆ˜
+	
 	public Person(String ID, String name, String PW, String gender, int age){
 		this.name = name;
 		this.gender = gender;
@@ -19,22 +19,22 @@ public class Person {
 	}
 
 	// setter
-	
-
-	
-	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 	public void setID(String ID) {
 		this.ID = ID;
 	}
+	
 	public void setPW(String PW) {
 		this.PW = PW;
 	}
+	
 	public void setAge(int age) {
 		this.age = age;
 	}

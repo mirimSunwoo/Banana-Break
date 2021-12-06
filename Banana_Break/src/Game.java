@@ -16,7 +16,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.JLabel;
+import java.awt.Font;
 
 
 public class Game extends JFrame{
@@ -103,6 +105,30 @@ public class Game extends JFrame{
 		panel_2.setBounds(521, 25, 169, 32);
 		panel_2.setBackground(Color.WHITE);
 		mainPane.add(panel_2);
+		
+		JLabel timerLabel = new JLabel("00:01:00");
+		timerLabel.setFont(new Font("굴림", Font.BOLD, 16));
+		timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		timerLabel.setBounds(0, 16, 705, 45);
+		mainPane.add(timerLabel);
+		
+		Timer timer = new Timer(1000, new ActionListener() {
+			int timeSec = 60;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(timeSec == 60) {
+					timerLabel.setText("00:01:00");
+					timeSec--;
+				}else {
+					timerLabel.setText("00:00:" + timeSec--);
+				}
+				if(timeSec == -1) System.exit(0);
+			}
+		});
+		
+		timer.start();
 		
 		JButton btnHomeBack = new JButton("게임 나가기");
 		btnHomeBack.setBounds(522, 66, 171, 32);
@@ -230,5 +256,4 @@ public class Game extends JFrame{
 			
 		});
 	}
-
 }
