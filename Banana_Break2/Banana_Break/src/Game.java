@@ -23,12 +23,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.awt.Font;
 
 
 public class Game extends JFrame{
 
 	private Image startBack = new ImageIcon(main_game.class.getResource("./images/mainFrame.png")).getImage();
 
+	int burnt = 0; //»§°¹¼ö
 	public void paint(Graphics g) {
 		g.drawImage(startBack, 0, 0, null);
 	}
@@ -89,36 +91,36 @@ public class Game extends JFrame{
 		mainPane.setLayout(null);
 		
 		JButton btnAdd = new JButton("¹ÝÁ×Ãß°¡");
-		btnAdd.setBounds(140, 71, 108, 32);
+		btnAdd.setBounds(10, 50, 100, 32);
 		mainPane.add(btnAdd);
 		
 		JButton btnGive = new JButton("»§ÁÖ±â");
-		btnGive.setBounds(140, 25, 107, 33);
+		btnGive.setBounds(10, 10, 100, 33);
 		mainPane.add(btnGive);
 		
 		Panel panel = new Panel();
-		panel.setFont(null);
-		panel.setBounds(10, 26, 113, 32);
+		panel.setFont(new Font("Dialog", Font.BOLD, 12));
+		panel.setBounds(120, 10, 113, 32);
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
 		mainPane.add(panel);
 		
 		Panel panel_1 = new Panel();
-		panel_1.setBounds(10, 71, 113, 32);
+		panel_1.setBounds(120, 50, 113, 32);
 		panel_1.setBackground(Color.WHITE);
 		mainPane.add(panel_1);
 		
 		Panel panel_2 = new Panel();
-		panel_2.setBounds(521, 25, 169, 32);
+		panel_2.setBounds(495, 10, 200, 32);
 		panel_2.setBackground(Color.WHITE);
 		mainPane.add(panel_2);
 		
-		JButton btnHomeBack = new JButton("°ÔÀÓ ³ª°¡±â");
-		btnHomeBack.setBounds(522, 66, 171, 32);
+		JButton btnHomeBack = new JButton("\uB098\uAC00\uAE30");
+		btnHomeBack.setBounds(600, 50, 95, 32);
 		mainPane.add(btnHomeBack);
 		
-		JButton btnGameClear = new JButton("\uAC8C\uC784 \uD074\uB9AC\uC5B4");
-		btnGameClear.setBounds(522, 105, 171, 32);
+		JButton btnGameClear = new JButton("\uD074\uB9AC\uC5B4");
+		btnGameClear.setBounds(495, 50, 100, 32);
 		mainPane.add(btnGameClear);
 		
 		
@@ -154,10 +156,13 @@ public class Game extends JFrame{
 						btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton.setBounds(30, 340, 124, 81);
 						mainPane.add(btnNewButton);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
-				
 			}
 		});
 		btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
@@ -180,9 +185,9 @@ public class Game extends JFrame{
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
-						btnNewButton.setBounds(30, 420, 124, 81);
-						mainPane.add(btnNewButton);
+						btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_1.setBounds(30, 420, 124, 81);
+						mainPane.add(btnNewButton_1);
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -192,9 +197,13 @@ public class Game extends JFrame{
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
-						btnNewButton.setBounds(30, 420, 124, 81);
-						mainPane.add(btnNewButton);
+						btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_1.setBounds(30, 420, 124, 81);
+						mainPane.add(btnNewButton_1);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -237,6 +246,10 @@ public class Game extends JFrame{
 						btnNewButton_2.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_2.setBounds(160, 340, 124, 81);
 						mainPane.add(btnNewButton_2);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -278,6 +291,10 @@ public class Game extends JFrame{
 						btnNewButton_3.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_3.setBounds(160, 420, 124, 81);
 						mainPane.add(btnNewButton_3);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -320,6 +337,10 @@ public class Game extends JFrame{
 						btnNewButton_4.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_4.setBounds(290, 340, 124, 81);
 						mainPane.add(btnNewButton_4);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -361,6 +382,10 @@ public class Game extends JFrame{
 						btnNewButton_5.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_5.setBounds(290, 420, 124, 81);
 						mainPane.add(btnNewButton_5);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -403,6 +428,10 @@ public class Game extends JFrame{
 						btnNewButton_6.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_6.setBounds(420, 340, 124, 81);
 						mainPane.add(btnNewButton_6);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -444,6 +473,10 @@ public class Game extends JFrame{
 						btnNewButton_7.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_7.setBounds(420, 420, 124, 81);
 						mainPane.add(btnNewButton_7);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -486,6 +519,10 @@ public class Game extends JFrame{
 						btnNewButton_8.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_8.setBounds(550, 340, 124, 81);
 						mainPane.add(btnNewButton_8);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
@@ -528,12 +565,17 @@ public class Game extends JFrame{
 						btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
 						btnNewButton_9.setBounds(550, 420, 124, 81);
 						mainPane.add(btnNewButton_9);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
 					}
 				};
 				timer2.schedule(task2, 7000);
 				
 			}
 		});
+				
 		btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
 		btnNewButton_9.setBounds(550, 420, 124, 81);
 		mainPane.add(btnNewButton_9);
