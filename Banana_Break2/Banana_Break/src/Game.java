@@ -24,13 +24,18 @@ import java.awt.event.MouseEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Font;
+import javax.swing.JTextPane;
 
 
 public class Game extends JFrame{
 
 	private Image startBack = new ImageIcon(main_game.class.getResource("./images/mainFrame.png")).getImage();
 
-	int burnt = 0; //ªß∞πºˆ
+	int burnt = 0; //≈∫ ªß∞πºˆ
+	int BuyDough = 0; //π›¡◊ªÁ±‚
+	int MyBread = 0; //∏∏µÁ ªß ∞πºˆ
+	int Money = 100; //±‚∫ª¿⁄±› 100ø¯
+	
 	public void paint(Graphics g) {
 		g.drawImage(startBack, 0, 0, null);
 	}
@@ -56,9 +61,33 @@ public class Game extends JFrame{
 			}
 		});
 	}
+    public class TaskToDo extends TimerTask {
+       int timeSec = 60;
+       JLabel timerLabel;    
+       
+       public TaskToDo(JLabel timerLabel) {
+          this.timerLabel = timerLabel;
+       }
+       
+        @Override
+        public void run() {
+           if(timeSec == 60) {
+                timerLabel.setText("00:01:00");
+                timeSec--;
+             }else {
+               if(timeSec >= 10)
+                  timerLabel.setText("00:00:" + timeSec--);
+               else
+                  timerLabel.setText("00:00:0" + timeSec--);
+             }
+             if(timeSec == -1) this.cancel();
+          
+      }
+    }
 	private void initialize() {
 		//∞‘¿” Ω√¿€»≠∏È
 		frame = new JFrame();
+		frame.setResizable(false);
 		frame.setBounds(100, 100, 721, 544);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -91,10 +120,32 @@ public class Game extends JFrame{
 		mainPane.setLayout(null);
 		
 		JButton btnAdd = new JButton("π›¡◊√ﬂ∞°");
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				BuyDough += 1;
+				System.out.println("π›¡◊¿« ∞≥ºˆ :" + BuyDough);
+				Money -= 10;
+				System.out.println("«ˆ¿Á ¿⁄±› :" +Money);
+				if (Money<=0) {
+					System.out.println("µ∑¿Ã æ¯Ω¿¥œ¥Ÿ.");
+				}
+			}
+		});
 		btnAdd.setBounds(10, 50, 100, 32);
 		mainPane.add(btnAdd);
 		
 		JButton btnGive = new JButton("ªß¡÷±‚");
+		btnGive.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MyBread -= 1;
+				System.out.println("ªß¿« ∞πºˆ :"+MyBread);
+				if (MyBread<=0) {
+					System.out.println("ªß¿Ã æ¯Ω¿¥œ¥Ÿ");
+				}
+			}
+		});
 		btnGive.setBounds(10, 10, 100, 33);
 		mainPane.add(btnGive);
 		
@@ -103,7 +154,10 @@ public class Game extends JFrame{
 		panel.setBounds(120, 10, 113, 32);
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
+		panel.toString();
+		
 		mainPane.add(panel);
+	
 		
 		Panel panel_1 = new Panel();
 		panel_1.setBounds(120, 50, 113, 32);
@@ -115,17 +169,43 @@ public class Game extends JFrame{
 		panel_2.setBackground(Color.WHITE);
 		mainPane.add(panel_2);
 		
+		JLabel timerLabel = new JLabel("00:01:00");
+	    timerLabel.setFont(new Font("±º∏≤", Font.BOLD, 40));
+	    timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	    timerLabel.setBounds(0, 16, 705, 66);
+	    mainPane.add(timerLabel);
+	    
+		JTextPane textPane = new JTextPane();
+		textPane.setText("0");
+		textPane.setBounds(122, 10, 111, 33);
+		mainPane.add(textPane);
+		
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setText("0");
+		textPane_1.setBounds(122, 50, 111, 32);
+		mainPane.add(textPane_1);
+	      
+        JLabel timerLabel1 = new JLabel("");
+        timerLabel1.setFont(new Font("±º∏≤", Font.BOLD, 15));
+        timerLabel1.setBounds(0, 0, 705, 66);
+        timerLabel1.setHorizontalAlignment(SwingConstants.CENTER);
+        mainPane.add(timerLabel1);
+      
+        Timer time = new Timer();
+        time.schedule(new TaskToDo(timerLabel), 2500, 1000);
+      
 		JButton btnHomeBack = new JButton("\uB098\uAC00\uAE30");
-		btnHomeBack.setBounds(600, 50, 95, 32);
+		btnHomeBack.setBounds(10, 130, 100, 32);
 		mainPane.add(btnHomeBack);
 		
-		JButton btnGameClear = new JButton("\uD074\uB9AC\uC5B4");
-		btnGameClear.setBounds(495, 50, 100, 32);
-		mainPane.add(btnGameClear);
+		JButton btnReGame = new JButton("\uB2E4\uC2DC\uC2DC\uC791");
+		btnReGame.setBounds(10, 90, 100, 32);
+		mainPane.add(btnReGame);
 		
 		
 		//1π¯ ¡Ÿ
 		//1
+		
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -144,6 +224,8 @@ public class Game extends JFrame{
 						btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton.setBounds(30, 340, 124, 81);
 						mainPane.add(btnNewButton);
+						
+						MyBread += 1;
 					}
 				};
 				timer1.schedule(task1, 4000);
@@ -159,6 +241,7 @@ public class Game extends JFrame{
 						
 						burnt +=1;
 						System.out.println(burnt);
+					
 
 					}
 				};
@@ -188,6 +271,8 @@ public class Game extends JFrame{
 						btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_1.setBounds(30, 420, 124, 81);
 						mainPane.add(btnNewButton_1);
+						
+						MyBread += 1;
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -234,6 +319,9 @@ public class Game extends JFrame{
 						btnNewButton_2.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_2.setBounds(160, 340, 124, 81);
 						mainPane.add(btnNewButton_2);
+						
+						MyBread += 1;
+
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -279,6 +367,9 @@ public class Game extends JFrame{
 						btnNewButton_3.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_3.setBounds(160, 420, 124, 81);
 						mainPane.add(btnNewButton_3);
+						
+						MyBread += 1;
+
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -325,6 +416,9 @@ public class Game extends JFrame{
 						btnNewButton_4.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_4.setBounds(290, 340, 124, 81);
 						mainPane.add(btnNewButton_4);
+						
+						MyBread += 1;
+
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -370,6 +464,9 @@ public class Game extends JFrame{
 						btnNewButton_5.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_5.setBounds(290, 420, 124, 81);
 						mainPane.add(btnNewButton_5);
+						
+						MyBread += 1;
+
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -416,6 +513,8 @@ public class Game extends JFrame{
 						btnNewButton_6.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_6.setBounds(420, 340, 124, 81);
 						mainPane.add(btnNewButton_6);
+						
+						MyBread += 1;
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -461,6 +560,8 @@ public class Game extends JFrame{
 						btnNewButton_7.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_7.setBounds(420, 420, 124, 81);
 						mainPane.add(btnNewButton_7);
+						
+						MyBread += 1;
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -507,6 +608,8 @@ public class Game extends JFrame{
 						btnNewButton_8.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_8.setBounds(550, 340, 124, 81);
 						mainPane.add(btnNewButton_8);
+						
+						MyBread += 1;
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -553,6 +656,8 @@ public class Game extends JFrame{
 						btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
 						btnNewButton_9.setBounds(550, 420, 124, 81);
 						mainPane.add(btnNewButton_9);
+						
+						MyBread += 1;
 					}
 				};
 				timer1.schedule(task1, 3000);
@@ -573,18 +678,30 @@ public class Game extends JFrame{
 				};
 				timer2.schedule(task2, 7000);
 				
-			}
-		});
+				if(burnt > 10) {
+					System.out.println("æ»≥Á");
+				}
 				
+			}
+			
+		});
+		
 		btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
 		btnNewButton_9.setBounds(550, 420, 124, 81);
 		mainPane.add(btnNewButton_9);
+		
+		JLabel angryLabel = new JLabel("");
+		angryLabel.setIcon(new ImageIcon(Game.class.getResource("/images/angry.png")));
+		angryLabel.setBounds(-11, -34, 731, 385);
+		mainPane.add(angryLabel);
 		
 		//∏ﬁ¿Œ»≠∏È πË∞Ê
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(Game.class.getResource("/images/back_main.png")));
 		lblNewLabel_1.setBounds(-11, 0, 731, 505);
 		mainPane.add(lblNewLabel_1);
+		
+		
 		
 		JPanel finishPane = new JPanel();
 		finishPane.setBounds(0, 1, 705, 503);
@@ -649,13 +766,13 @@ public class Game extends JFrame{
 			
 		});
 		//∞‘¿” ≥°≥µ¿ª∂ß
-		btnGameClear.addActionListener(new ActionListener() {
+		btnReGame.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				mainPane.setVisible(false);
-				finishPane.setVisible(true);
+				mainPane.setVisible(true);
+				finishPane.setVisible(false);
 				gameoverPane.setVisible(false);
 				startPane.setVisible(false);
 			}
