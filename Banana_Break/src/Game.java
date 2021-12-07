@@ -1,30 +1,31 @@
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.border.EmptyBorder;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.Font;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 
 public class Game extends JFrame{
 
 	private Image startBack = new ImageIcon(main_game.class.getResource("./images/mainFrame.png")).getImage();
 
+	int burnt = 0; //ªß∞πºˆ
 	public void paint(Graphics g) {
 		g.drawImage(startBack, 0, 0, null);
 	}
@@ -50,7 +51,31 @@ public class Game extends JFrame{
 			}
 		});
 	}
+	public class TaskToDo extends TimerTask {
+	 	int timeSec = 60;
+	    JLabel timerLabel;    
+	 	
+	 	public TaskToDo(JLabel timerLabel) {
+	 		this.timerLabel = timerLabel;
+	 	}
+	 	
+        @Override
+        public void run() {
+        	if(timeSec == 60) {
+                timerLabel.setText("00:01:00");
+                timeSec--;
+             }else {
+            	if(timeSec >= 10)
+            		timerLabel.setText("00:00:" + timeSec--);
+            	else
+            		timerLabel.setText("00:00:0" + timeSec--);
+             }
+             if(timeSec == 0) this.cancel();
+          
+		}
+    }
 	private void initialize() {
+		//∞‘¿” Ω√¿€»≠∏È
 		frame = new JFrame();
 		frame.setBounds(100, 100, 721, 544);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,72 +100,517 @@ public class Game extends JFrame{
 		lblNewLabel.setIcon(new ImageIcon(Game.class.getResource("/images/mainFrame.png")));
 		startPane.add(lblNewLabel);
 		
-		
+		//∏ﬁ¿Œ ∞‘¿”»≠∏È
 		JPanel mainPane = new JPanel();
 		mainPane.setBounds(0, 0, 705, 505);
+		mainPane.setBorder(new LineBorder(Color.black,5));
 		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frame.getContentPane().add(mainPane);
 		mainPane.setLayout(null);
 		
 		JButton btnAdd = new JButton("π›¡◊√ﬂ∞°");
-		btnAdd.setBounds(140, 71, 108, 32);
+		btnAdd.setBounds(10, 50, 100, 32);
 		mainPane.add(btnAdd);
 		
 		JButton btnGive = new JButton("ªß¡÷±‚");
-		btnGive.setBounds(140, 25, 107, 33);
+		btnGive.setBounds(10, 10, 100, 33);
 		mainPane.add(btnGive);
 		
 		Panel panel = new Panel();
-		panel.setBounds(10, 26, 113, 32);
+		panel.setFont(new Font("Dialog", Font.BOLD, 12));
+		panel.setBounds(120, 10, 113, 32);
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
 		mainPane.add(panel);
 		
 		Panel panel_1 = new Panel();
-		panel_1.setBounds(10, 71, 113, 32);
+		panel_1.setBounds(120, 50, 113, 32);
 		panel_1.setBackground(Color.WHITE);
 		mainPane.add(panel_1);
 		
 		Panel panel_2 = new Panel();
-		panel_2.setBounds(521, 25, 169, 32);
+		panel_2.setBounds(495, 10, 200, 32);
 		panel_2.setBackground(Color.WHITE);
 		mainPane.add(panel_2);
 		
-		JLabel timerLabel = new JLabel("00:01:00");
-		timerLabel.setFont(new Font("±º∏≤", Font.BOLD, 16));
+		JLabel timerLabel = new JLabel("");
+		timerLabel.setFont(new Font("±º∏≤", Font.BOLD, 15));
+		timerLabel.setBounds(0, 0, 705, 66);
 		timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		timerLabel.setBounds(0, 16, 705, 45);
 		mainPane.add(timerLabel);
 		
-		Timer timer = new Timer(1000, new ActionListener() {
-			int timeSec = 60;
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if(timeSec == 60) {
-					timerLabel.setText("00:01:00");
-					timeSec--;
-				}else {
-					timerLabel.setText("00:00:" + timeSec--);
-				}
-				if(timeSec == -1) System.exit(0);
-			}
-		});
+		Timer time = new Timer();
+		time.schedule(new TaskToDo(timerLabel), 2500, 1000);
 		
-		timer.start();
-		
-		JButton btnHomeBack = new JButton("∞‘¿” ≥™∞°±‚");
-		btnHomeBack.setBounds(522, 66, 171, 32);
+		JButton btnHomeBack = new JButton("\uB098\uAC00\uAE30");
+		btnHomeBack.setBounds(600, 50, 95, 32);
 		mainPane.add(btnHomeBack);
 		
-		JButton btnGameClear = new JButton("\uAC8C\uC784 \uD074\uB9AC\uC5B4");
-		btnGameClear.setBounds(522, 105, 171, 32);
+		JButton btnGameClear = new JButton("\uD074\uB9AC\uC5B4");
+		btnGameClear.setBounds(495, 50, 100, 32);
 		mainPane.add(btnGameClear);
 		
+		
+		//1π¯ ¡Ÿ
+		//1
+		JButton btnNewButton = new JButton("");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton.setBounds(30, 340, 124, 81);
+				mainPane.add(btnNewButton);
+				
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton.setBounds(30, 340, 124, 81);
+						mainPane.add(btnNewButton);
+					}
+				};
+				timer1.schedule(task1, 4000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton.setBounds(30, 340, 124, 81);
+						mainPane.add(btnNewButton);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+			}
+		});
+		btnNewButton.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton.setBounds(30, 340, 124, 81);
+		mainPane.add(btnNewButton);
+		
+		//2
+		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_1.setBounds(30, 420, 124, 81);
+				mainPane.add(btnNewButton_1);
+				
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_1.setBounds(30, 420, 124, 81);
+						mainPane.add(btnNewButton_1);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_1.setBounds(30, 420, 124, 81);
+						mainPane.add(btnNewButton_1);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+			}
+		});
+		btnNewButton_1.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_1.setBounds(30, 420, 124, 81);
+		mainPane.add(btnNewButton_1);
+		
+		
+		//2π¯ ¡Ÿ
+		//3
+		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_2.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_2.setBounds(160, 340, 124, 81);
+				mainPane.add(btnNewButton_2);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_2.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_2.setBounds(160, 340, 124, 81);
+						mainPane.add(btnNewButton_2);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_2.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_2.setBounds(160, 340, 124, 81);
+						mainPane.add(btnNewButton_2);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_2.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_2.setBounds(160, 340, 124, 81);
+		mainPane.add(btnNewButton_2);
+		
+		//4
+		JButton btnNewButton_3 = new JButton("");
+		btnNewButton_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_3.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_3.setBounds(160, 420, 124, 81);
+				mainPane.add(btnNewButton_3);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_3.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_3.setBounds(160, 420, 124, 81);
+						mainPane.add(btnNewButton_3);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_3.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_3.setBounds(160, 420, 124, 81);
+						mainPane.add(btnNewButton_3);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_3.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_3.setBounds(160, 420, 124, 81);
+		mainPane.add(btnNewButton_3);
+		
+		//3π¯ ¡Ÿ
+		//5
+		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_4.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_4.setBounds(290, 340, 124, 81);
+				mainPane.add(btnNewButton_4);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_4.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_4.setBounds(290, 340, 124, 81);
+						mainPane.add(btnNewButton_4);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_4.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_4.setBounds(290, 340, 124, 81);
+						mainPane.add(btnNewButton_4);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_4.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_4.setBounds(290, 340, 124, 81);
+		mainPane.add(btnNewButton_4);
+		
+		//6
+		JButton btnNewButton_5 = new JButton("");
+		btnNewButton_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_5.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_5.setBounds(290, 420, 124, 81);
+				mainPane.add(btnNewButton_5);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_5.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_5.setBounds(290, 420, 124, 81);
+						mainPane.add(btnNewButton_5);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_5.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_5.setBounds(290, 420, 124, 81);
+						mainPane.add(btnNewButton_5);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_5.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_5.setBounds(290, 420, 124, 81);
+		mainPane.add(btnNewButton_5);
+		
+		//4π¯ ¡Ÿ
+		//7
+		JButton btnNewButton_6 = new JButton("");
+		btnNewButton_6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_6.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_6.setBounds(420, 340, 124, 81);
+				mainPane.add(btnNewButton_6);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_6.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_6.setBounds(420, 340, 124, 81);
+						mainPane.add(btnNewButton_6);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_6.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_6.setBounds(420, 340, 124, 81);
+						mainPane.add(btnNewButton_6);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_6.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_6.setBounds(420, 340, 124, 81);
+		mainPane.add(btnNewButton_6);
+		
+		//8
+		JButton btnNewButton_7 = new JButton("");
+		btnNewButton_7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_7.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_7.setBounds(420, 420, 124, 81);
+				mainPane.add(btnNewButton_7);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_7.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_7.setBounds(420, 420, 124, 81);
+						mainPane.add(btnNewButton_7);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_7.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_7.setBounds(420, 420, 124, 81);
+						mainPane.add(btnNewButton_7);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_7.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_7.setBounds(420, 420, 124, 81);
+		mainPane.add(btnNewButton_7);
+		
+		//5π¯ ¡Ÿ
+		//9
+		JButton btnNewButton_8 = new JButton("");
+		btnNewButton_8.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_8.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_8.setBounds(550, 340, 124, 81);
+				mainPane.add(btnNewButton_8);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_8.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_8.setBounds(550, 340, 124, 81);
+						mainPane.add(btnNewButton_8);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_8.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_8.setBounds(550, 340, 124, 81);
+						mainPane.add(btnNewButton_8);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+		btnNewButton_8.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_8.setBounds(550, 340, 124, 81);
+		mainPane.add(btnNewButton_8);
+		
+		
+		//10
+		JButton btnNewButton_9 = new JButton("");
+		btnNewButton_9.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_2.png")));
+				btnNewButton_9.setBounds(550, 420, 124, 81);
+				mainPane.add(btnNewButton_9);
+
+				Timer timer1 = new Timer(); //∏¿¿÷¥¬∞≈
+				Timer timer2 = new Timer(); //≈∫∞≈
+				TimerTask task1 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_3 (1).png")));
+						btnNewButton_9.setBounds(550, 420, 124, 81);
+						mainPane.add(btnNewButton_9);
+					}
+				};
+				timer1.schedule(task1, 3000);
+				
+				TimerTask task2 = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_4 (1).png")));
+						btnNewButton_9.setBounds(550, 420, 124, 81);
+						mainPane.add(btnNewButton_9);
+						
+						burnt +=1;
+						System.out.println(burnt);
+
+					}
+				};
+				timer2.schedule(task2, 7000);
+				
+			}
+		});
+				
+		btnNewButton_9.setIcon(new ImageIcon(Game.class.getResource("/images/bananaFrame_10.3 (1).png")));
+		btnNewButton_9.setBounds(550, 420, 124, 81);
+		mainPane.add(btnNewButton_9);
+		
+		//∏ﬁ¿Œ»≠∏È πË∞Ê
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(Game.class.getResource("/images/back_main.png")));
-		lblNewLabel_1.setBounds(0, 0, 705, 505);
+		lblNewLabel_1.setBounds(-11, 0, 731, 505);
 		mainPane.add(lblNewLabel_1);
 		
 		JPanel finishPane = new JPanel();
