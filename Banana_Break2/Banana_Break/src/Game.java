@@ -7,6 +7,10 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Panel;
@@ -21,25 +25,39 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.Font;
 import javax.swing.JTextPane;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.JTextField;
 
 
 public class Game extends JFrame{
 
 	private Image startBack = new ImageIcon(main_game.class.getResource("./images/mainFrame.png")).getImage();
-
+	private JTextField textField, textField_1, textField_2;
+	
 	int burnt = 0; //탄 빵갯수
 	int BuyDough = 0; //반죽사기
 	int MyBread = 0; //만든 빵 갯수
 	int Money = 100; //기본자금 100원
+	int Dough = 0;
 	
 	public void paint(Graphics g) {
 		g.drawImage(startBack, 0, 0, null);
 	}
 	private JFrame frame;
+	private JTextField bubble_1;
 
 	/**
 	 * Launch the application.
@@ -84,6 +102,16 @@ public class Game extends JFrame{
           
       }
     }
+//    public static void Main_sound(String file) {
+//    	try {
+//    		AudioInputStream ais = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+//    		Clip clip = AudioSystem.getClip();
+//    		clip.open(ais);
+//    		clip.start();
+//    	}catch(Exception e) {
+//    		e.printStackTrace();
+//    	}
+//    }
 	private void initialize() {
 		//게임 시작화면
 		frame = new JFrame();
@@ -92,6 +120,11 @@ public class Game extends JFrame{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		Music introMusic = new Music("mainMusic.mp3",true);
+		introMusic.start();
+		//메인 노래
+//		Main_sound("/music/factory-area-10410.mp3");
+		
 		JPanel startPane = new JPanel();
 		startPane.setBounds(0, 0, 705, 505);
 		startPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,12 +132,8 @@ public class Game extends JFrame{
 		startPane.setLayout(null);
 		
 		JButton btnStart = new JButton("게임 시작하기");
-		btnStart.setBounds(176, 306, 149, 32);
+		btnStart.setBounds(279, 323, 149, 32);
 		startPane.add(btnStart);
-		
-		JButton btnExplan = new JButton("게임 설명서");
-		btnExplan.setBounds(377, 306, 149, 32);
-		startPane.add(btnExplan);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 705, 505);
@@ -113,66 +142,93 @@ public class Game extends JFrame{
 		
 		//메인 게임화면
 		JPanel mainPane = new JPanel();
-		mainPane.setBounds(0, 0, 705, 505);
-		mainPane.setBorder(new LineBorder(Color.black,5));
-		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		frame.getContentPane().add(mainPane);
-		mainPane.setLayout(null);
-		
-		JButton btnAdd = new JButton("반죽추가");
-		btnAdd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				BuyDough += 1;
-				System.out.println("반죽의 개수 :" + BuyDough);
-				Money -= 10;
-				System.out.println("현재 자금 :" +Money);
-				if (Money<=0) {
-					System.out.println("돈이 없습니다.");
-				}
-			}
-		});
-		btnAdd.setBounds(10, 50, 100, 32);
-		mainPane.add(btnAdd);
-		
-		JButton btnGive = new JButton("빵주기");
-		btnGive.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				MyBread -= 1;
-				System.out.println("빵의 갯수 :"+MyBread);
-				if (MyBread<=0) {
-					System.out.println("빵이 없습니다");
-				}
-			}
-		});
-		btnGive.setBounds(10, 10, 100, 33);
-		mainPane.add(btnGive);
-		
-		Panel panel = new Panel();
-		panel.setFont(new Font("Dialog", Font.BOLD, 12));
-		panel.setBounds(120, 10, 113, 32);
-		panel.setForeground(Color.WHITE);
-		panel.setBackground(Color.WHITE);
-		panel.toString();
-		
-		mainPane.add(panel);
-	
-		
-		Panel panel_1 = new Panel();
-		panel_1.setBounds(120, 50, 113, 32);
-		panel_1.setBackground(Color.WHITE);
-		mainPane.add(panel_1);
-		
-		Panel panel_2 = new Panel();
-		panel_2.setBounds(495, 10, 200, 32);
-		panel_2.setBackground(Color.WHITE);
-		mainPane.add(panel_2);
+	      mainPane.setBounds(0, 0, 705, 505);
+	      mainPane.setBorder(new LineBorder(Color.black, 5));
+	      mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	      frame.getContentPane().add(mainPane);
+	      mainPane.setLayout(null);
+
+	      JButton btnAdd = new JButton("반죽추가");
+	      btnAdd.addMouseListener(new MouseAdapter() {
+	         @Override
+	         public void mouseClicked(MouseEvent e) {
+	            if (Money <= 0) {
+	               JOptionPane jOptionPane = new JOptionPane();
+	               jOptionPane.showMessageDialog(null, "돈이 없습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+	            } else {
+	               Dough += 1;
+	               Money -= 10;
+	            }
+	            textField_1.setText(Dough + "개");
+	            textField_2.setText(Money + "원");
+	         }
+	      });
+	      btnAdd.setBounds(10, 50, 100, 32);
+	      mainPane.add(btnAdd);
+
+	      JButton btnGive = new JButton("빵주기");
+	      btnGive.addMouseListener(new MouseAdapter() {
+	         @Override
+	         public void mouseClicked(MouseEvent e) {
+	            if (MyBread <= 0) {
+	               JOptionPane jOptionPane = new JOptionPane();
+	               jOptionPane.showMessageDialog(null, "빵이 없습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+	            } else {
+	               MyBread -= 1;
+	            }
+	            textField.setText(MyBread + "개");
+	         }
+	      });
+	      btnGive.setBounds(10, 10, 100, 33);
+	      mainPane.add(btnGive);
+
+	      textField = new JTextField();
+	      textField.setEditable(false);
+	      textField.setHorizontalAlignment(SwingConstants.CENTER);
+	      textField.setBounds(120, 10, 113, 32);
+	      textField.setText(MyBread + "개");
+	      mainPane.add(textField);
+	      textField.setColumns(10);
+
+	      Panel panel = new Panel();
+	      panel.setFont(new Font("Dialog", Font.BOLD, 12));
+	      panel.setBounds(120, 10, 113, 32);
+	      panel.setForeground(Color.WHITE);
+	      panel.setBackground(Color.WHITE);
+	      panel.toString();
+
+	      mainPane.add(panel);
+
+	      textField_1 = new JTextField();
+	      textField_1.setEditable(false);
+	      textField_1.setHorizontalAlignment(SwingConstants.CENTER);
+	      textField_1.setBounds(120, 50, 113, 32);
+	      textField_1.setText(Dough + "개");
+	      mainPane.add(textField_1);
+	      textField_1.setColumns(10);
+
+	      Panel panel_1 = new Panel();
+	      panel_1.setBounds(120, 50, 113, 32);
+	      panel_1.setBackground(Color.WHITE);
+	      mainPane.add(panel_1);
+
+	      textField_2 = new JTextField();
+	      textField_2.setEditable(false);
+	      textField_2.setHorizontalAlignment(SwingConstants.CENTER);
+	      textField_2.setBounds(495, 10, 200, 32);
+	      textField_2.setText(Money + "원");
+	      mainPane.add(textField_2);
+	      textField_2.setColumns(10);
+
+	      Panel panel_2 = new Panel();
+	      panel_2.setBounds(495, 10, 200, 32);
+	      panel_2.setBackground(Color.WHITE);
+	      mainPane.add(panel_2);
 		
 		JLabel timerLabel = new JLabel("00:01:00");
-	    timerLabel.setFont(new Font("굴림", Font.BOLD, 40));
+	    timerLabel.setFont(new Font("Berlin Sans FB", Font.PLAIN, 45));
 	    timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	    timerLabel.setBounds(0, 16, 705, 66);
+	    timerLabel.setBounds(0, 0, 705, 82);
 	    mainPane.add(timerLabel);
 	    
 		JTextPane textPane = new JTextPane();
@@ -194,12 +250,13 @@ public class Game extends JFrame{
         Timer time = new Timer();
         time.schedule(new TaskToDo(timerLabel), 2500, 1000);
       
-		JButton btnHomeBack = new JButton("\uB098\uAC00\uAE30");
-		btnHomeBack.setBounds(10, 130, 100, 32);
+		JButton btnHomeBack = new JButton("나가기");
+		btnHomeBack.setBounds(495, 50, 85, 32);
 		mainPane.add(btnHomeBack);
 		
-		JButton btnReGame = new JButton("\uB2E4\uC2DC\uC2DC\uC791");
-		btnReGame.setBounds(10, 90, 100, 32);
+		JButton btnReGame = new JButton("\uAC8C\uC784\uD074\uB9AC\uC5B4");
+		btnReGame.setActionCommand("");
+		btnReGame.setBounds(585, 50, 110, 32);
 		mainPane.add(btnReGame);
 		
 		
@@ -677,11 +734,6 @@ public class Game extends JFrame{
 					}
 				};
 				timer2.schedule(task2, 7000);
-				
-				if(burnt > 10) {
-					System.out.println("안녕");
-				}
-				
 			}
 			
 		});
@@ -690,16 +742,80 @@ public class Game extends JFrame{
 		btnNewButton_9.setBounds(550, 420, 124, 81);
 		mainPane.add(btnNewButton_9);
 		
-		JLabel angryLabel = new JLabel("");
-		angryLabel.setIcon(new ImageIcon(Game.class.getResource("/images/angry.png")));
-		angryLabel.setBounds(-11, -34, 731, 385);
-		mainPane.add(angryLabel);
+		
+//		if(burnt>=10) {
+//		JLabel angryLabel = new JLabel("");
+//		angryLabel.setIcon(new ImageIcon(Game.class.getResource("/images/angry.png")));
+//		angryLabel.setBounds(-11, -34, 731, 385);
+//		mainPane.add(angryLabel);
+//		}
 		
 		//메인화면 배경
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(Game.class.getResource("/images/back_main.png")));
-		lblNewLabel_1.setBounds(-11, 0, 731, 505);
-		mainPane.add(lblNewLabel_1);
+		JLabel MainBack = new JLabel("");
+		
+//		lblNewLabel_1.addComponentListener(new ComponentAdapter() {
+//			@Override
+//			public void componentShown(ComponentEvent e) {
+//				burnt = 10;
+//				if(burnt>=10) {
+//					JLabel angryLabel = new JLabel("");
+//					angryLabel.setIcon(new ImageIcon(Game.class.getResource("/images/angry.png")));
+//					angryLabel.setBounds(-11, -34, 731, 385);
+//					mainPane.add(angryLabel);
+//				}
+//			}
+//		});
+		
+		JLabel angryLabel = new JLabel("");
+		angryLabel.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentHidden(ComponentEvent e) {
+				angryLabel.setIcon(new ImageIcon(Game.class.getResource("/images/angry.png")));
+				angryLabel.setBounds(-11, -34, 731, 385);
+				mainPane.add(angryLabel);
+			}
+		});
+		
+//		angryLabel.setIcon(new ImageIcon(Game.class.getResource("/images/angry.png")));
+//		angryLabel.setBounds(-11, -34, 731, 385);
+//		mainPane.add(angryLabel);
+////		
+		bubble_1 = new JTextField();
+		bubble_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bubble_1.setText("5");
+			}
+		});
+		bubble_1.setBounds(125, 185, 30, 30);
+		bubble_1.setEditable(false);
+		mainPane.add(bubble_1);
+		bubble_1.setColumns(10);
+		
+		
+		JLabel lblNewLabel_4 = new JLabel();
+		lblNewLabel_4.setIcon(new ImageIcon(Game.class.getResource("/images/image 55.png")));
+		lblNewLabel_4.setBounds(110, 170, 73, 66);
+		mainPane.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("");
+		lblNewLabel_4_1.setIcon(new ImageIcon(Game.class.getResource("/images/image 55.png")));
+		lblNewLabel_4_1.setBounds(290, 170, 73, 66);
+		mainPane.add(lblNewLabel_4_1);
+		
+		JLabel lblNewLabel_4_2 = new JLabel("");
+		lblNewLabel_4_2.setIcon(new ImageIcon(Game.class.getResource("/images/image 55.png")));
+		lblNewLabel_4_2.setBounds(470, 170, 73, 66);
+		mainPane.add(lblNewLabel_4_2);
+		
+		JLabel lblNewLabel_4_3 = new JLabel("");
+		lblNewLabel_4_3.setIcon(new ImageIcon(Game.class.getResource("/images/image 55.png")));
+		lblNewLabel_4_3.setBounds(630, 170, 73, 66);
+		mainPane.add(lblNewLabel_4_3);
+		
+		
+		MainBack.setIcon(new ImageIcon(Game.class.getResource("/images/back_main.png")));
+		MainBack.setBounds(-11, 0, 731, 505);
+		mainPane.add(MainBack);
 		
 		
 		
@@ -751,8 +867,9 @@ public class Game extends JFrame{
 				finishPane.setVisible(false);
 			}
 			
+			
 		});
-		//게임화면에서 메인으로 돌아가기
+//		게임화면에서 메인으로 돌아가기
 		btnHomeBack.addActionListener(new ActionListener() {
 
 			@Override
@@ -765,7 +882,7 @@ public class Game extends JFrame{
 			}
 			
 		});
-		//게임 끝났을때
+//		게임 끝났을때
 		btnReGame.addActionListener(new ActionListener() {
 
 			@Override
@@ -816,4 +933,5 @@ public class Game extends JFrame{
 			
 		});
 	}
+	
 }
